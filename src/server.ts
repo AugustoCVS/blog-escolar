@@ -1,4 +1,4 @@
-import "express-async-errors"
+import "express-async-errors";
 import express, { Request, Response, NextFunction } from "express";
 import cors, { CorsOptions } from "cors";
 
@@ -15,7 +15,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(router);
 
-app.use((error: any, request: Request, response: Response, next: NextFunction) => {
+app.use((error: any, request: Request, response: Response, next: NextFunction): any => {
   if (error instanceof Error) {
     return response.status(400).json({
       error: error.message
