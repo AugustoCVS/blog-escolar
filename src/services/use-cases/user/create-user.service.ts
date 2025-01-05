@@ -1,7 +1,7 @@
 import { hash } from "bcryptjs";
 import { ICreateUser } from "../../../domain/interfaces/user";
 import { client } from "../../../infra/prisma/client";
-import { emailRegex } from "../../../utils/regex";
+import { validateEmail, validateIfUserAlreadyExists } from "../../../utils/validations";
 
 class CreateUserService {
   private async validateEmptyFields(user: ICreateUser) {
@@ -12,33 +12,17 @@ class CreateUserService {
     }
   }
 
-  private async validateEmail({ email }: ICreateUser) {
-    if (!emailRegex.test(email)) {
-      throw new Error("Email inválido");
-    }
-  }
-
   private async validatePassword({ password, confirm_password }: ICreateUser) {
     if (password !== confirm_password) {
       throw new Error("As senhas não coincidem");
     }
   }
 
-  private async validateIfUserAlreadyExists({ email }: ICreateUser) {
-    const userAlreadyExists = await client.user.findUnique({
-      where: { email },
-    });
-
-    if (userAlreadyExists) {
-      throw new Error("Email indisponível");
-    }
-  }
-
   private async validateInputs(user: ICreateUser) {
     await this.validateEmptyFields(user);
-    await this.validateEmail(user);
     await this.validatePassword(user);
-    await this.validateIfUserAlreadyExists(user);
+    await validateIfUserAlreadyExists(user);
+    validateEmail(user);
   }
 
   async execute(user: ICreateUser) {
