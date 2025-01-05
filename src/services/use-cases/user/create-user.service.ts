@@ -21,8 +21,8 @@ class CreateUserService {
   private async validateInputs(user: ICreateUser) {
     await this.validateEmptyFields(user);
     await this.validatePassword(user);
-    await validateIfUserAlreadyExists(user);
-    validateEmail(user);
+    await validateIfUserAlreadyExists(user.email);
+    validateEmail(user.email);
   }
 
   async execute(user: ICreateUser) {
