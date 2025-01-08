@@ -73,10 +73,19 @@ class GetPostsService {
     };
   }
 
+  private async listAllPosts(): Promise<IPosts[]> {
+    const posts = await client.posts.findMany({
+      where: { active: true },
+      ...this.authorSelect,
+    });
+
+    return posts as IPosts[];
+  }
+
   async execute({
     postsId,
-    page = 1,
-    limit = 10,
+    page,
+    limit,
     title,
     content,
   }: IGetPostsInput & IPostsSearchParams): Promise<IPostResponse | IPosts | IPosts[]> {
@@ -89,7 +98,11 @@ class GetPostsService {
         return await this.searchPosts({ title, content });
       }
 
-      return await this.listPosts(page, limit);
+      if (page && limit) {
+        return await this.listPosts(page, limit);
+      }
+
+      return await this.listAllPosts();
     } catch (error) {
       throw new Error("Falha ao buscar posts: " + error.message);
     }

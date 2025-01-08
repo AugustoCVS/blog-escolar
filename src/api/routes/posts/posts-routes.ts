@@ -7,7 +7,7 @@ const postsController = new PostsController();
 
 postsRoutes.get("/", postsController.getPosts.bind(postsController));
 postsRoutes.get("/:id", postsController.getPosts.bind(postsController));
-postsRoutes.get("/search", postsController.getPosts.bind(postsController));
+postsRoutes.get("/search/list", postsController.getPosts.bind(postsController));
 
 postsRoutes.post("/", ensureIsAdmin, postsController.createPost.bind(postsController));
 postsRoutes.put("/:id", ensureIsAdmin, postsController.updatePost.bind(postsController));
