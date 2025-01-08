@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 
-export function ensureIsAdmin(request: Request, response: Response, next: NextFunction) {
-  const isAdmin = request.body.isAdmin;
+export function ensureIsAdmin(request: Request, response: Response, next: NextFunction): any {
+  const isAdmin = request.params.isAdmin;
 
-  if (isAdmin) {
+  if (!!isAdmin) {
     return next();
   }
 
