@@ -2,21 +2,25 @@ import { IPosts, IPostResponse, IGetPostsInput, IPostsSearchParams } from "../..
 import { client } from "../../../infra/prisma/client";
 
 class GetPostsService {
+  private readonly authorSelect = {
+    include: {
+      author: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          isAdmin: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    },
+  } as const;
+
   private async findPostById(postId: string): Promise<IPosts> {
     const post = await client.posts.findUnique({
       where: { id: postId },
-      include: {
-        author: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            isAdmin: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-      },
+      ...this.authorSelect,
     });
 
     if (!post || post.active === false) {
@@ -39,18 +43,7 @@ class GetPostsService {
           },
         ],
       },
-      include: {
-        author: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            isAdmin: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-      },
+      ...this.authorSelect,
     });
 
     return posts as IPosts[];
@@ -64,18 +57,7 @@ class GetPostsService {
         where: { active: true },
         skip,
         take: limit,
-        include: {
-          author: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              isAdmin: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-        },
+        ...this.authorSelect,
         orderBy: { createdAt: 'desc' },
       }),
       client.posts.count({ where: { active: true } }),
