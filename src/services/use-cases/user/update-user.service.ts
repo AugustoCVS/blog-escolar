@@ -8,27 +8,16 @@ class UpdateUserService {
     await validateIfUserAlreadyExists(email);
   }
 
-  async execute(id: string, userData: IUpdateUser): Promise<IUserResponse> {
+  async execute(id: string, userData: IUpdateUser): Promise<void> {
     try {
       await this.validateUserInput({
         email: userData.email,
       });
 
-      const updatedUser = await client.user.update({
+      await client.user.update({
         where: { id },
         data: userData,
       });
-
-      const newUser: IUserResponse = {
-        id: updatedUser.id,
-        name: updatedUser.name,
-        email: updatedUser.email,
-        isAdmin: updatedUser.isAdmin,
-        createdAt: updatedUser.createdAt,
-        updatedAt: updatedUser.updatedAt,
-      };
-
-      return newUser;
     } catch (error) {
       throw new Error("Falha ao atualizar usuário: " + error.message);
     }

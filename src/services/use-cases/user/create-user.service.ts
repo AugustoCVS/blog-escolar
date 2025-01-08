@@ -4,7 +4,7 @@ import { client } from "../../../infra/prisma/client";
 import { validateEmail, validateIfUserAlreadyExists } from "../../../utils/validations";
 
 class CreateUserService {
-  private async validateEmptyFields(user: ICreateUser) {
+  private async validateEmptyFields(user: ICreateUser): Promise<void> {
     const { isAdmin, ...otherFields } = user;
 
     if (Object.values(otherFields).some(value => !value) || isAdmin === undefined) {
@@ -12,13 +12,13 @@ class CreateUserService {
     }
   }
 
-  private async validatePassword({ password, confirm_password }: ICreateUser) {
+  private async validatePassword({ password, confirm_password }: ICreateUser): Promise<void> {
     if (password !== confirm_password) {
       throw new Error("As senhas não coincidem");
     }
   }
 
-  private async validateInputs(user: ICreateUser) {
+  private async validateInputs(user: ICreateUser): Promise<void> {
     await this.validateEmptyFields(user);
     await this.validatePassword(user);
     await validateIfUserAlreadyExists(user.email);
@@ -37,8 +37,6 @@ class CreateUserService {
           confirm_password: passwordHash,
         },
       });
-
-      return createdUser;
     } catch (error) {
       throw new Error("Falha ao criar usuário: " + error.message);
     }

@@ -1,3 +1,5 @@
+import { IUserResponse } from "./user";
+
 export interface ICreatePost {
   title: string;
   content: string;
@@ -10,10 +12,11 @@ export interface IPostResponse {
   content: string;
   createdAt: Date;
   updatedAt: Date;
-  authorId: string;
+  author: IUserResponse;
 }
 
 export interface IUpdatePost {
   title?: string;
   content?: string;
+  authorId?: string;
 }
