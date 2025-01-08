@@ -30,7 +30,7 @@ class CreateUserService {
       await this.validateInputs(user);
 
       const passwordHash = await hash(user.password, 8);
-      const createdUser = await client.user.create({
+      await client.user.create({
         data: {
           ...user,
           password: passwordHash,
