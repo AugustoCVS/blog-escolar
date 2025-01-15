@@ -10,8 +10,8 @@
 
 1. **Clone o repositório**:
    ```bash
-   git clone <URL_DO_REPOSITORIO>
-   cd <NOME_DO_REPOSITORIO>
+   git clone <https://github.com/AugustoCVS/blog-escolar.git>
+   cd <blog-escolar>
    ```
 
 2. **Instale as dependências**:
