@@ -131,8 +131,15 @@ A arquitetura do projeto é baseada em uma estrutura de microserviços, utilizan
 - **Endpoint**: `/posts/:id`
 - **Parâmetros**: `id` (ID do post)
 
-## 4. Conclusão
+## 4. Uso da Aplicação
 
-Esta documentação fornece uma visão geral do projeto, incluindo como configurá-lo e utilizá-lo. Para mais informações, consulte o código-fonte e os comentários nas funções.
+A aplicação foi desenvolvida para ser uma API de blog escolar, permitindo que usuários se registrem, criem posts e leiam o conteúdo.
 
----
+## 5. Desafios e Experiências
+
+Durante o desenvolvimento, a equipe enfrentou alguns desafios, como:
+
+- **Integração com o Prisma**: A configuração inicial do Prisma e a migração do banco de dados foram desafiadoras, especialmente na definição dos modelos e relacionamentos.
+- **Autenticação e Autorização**: Garantir que apenas usuários autorizados pudessem acessar certas rotas e funcionalidades exigiu um planejamento cuidadoso e a implementação de middlewares.
+
+A equipe aprendeu a importância de uma boa documentação e comunicação durante o desenvolvimento, o que facilitou a resolução de problemas e a implementação de novas funcionalidades.
