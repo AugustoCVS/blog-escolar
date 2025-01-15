@@ -7,9 +7,9 @@ class UserController {
   async createUser(request: Request, response: Response) {
     const { name, email, isAdmin, password, confirm_password } = request.body;
 
-    const authenticateUserUseCase = new CreateUserService();
+    const createUser = new CreateUserService();
 
-    const user = await authenticateUserUseCase.execute({
+    const user = await createUser.execute({
       name,
       email,
       isAdmin,

@@ -25,18 +25,20 @@ class CreateUserService {
     validateEmail(user.email);
   }
 
-  async execute(user: ICreateUser) {
+  async execute(user: ICreateUser): Promise<ICreateUser> {
     try {
       await this.validateInputs(user);
 
       const passwordHash = await hash(user.password, 8);
-      await client.user.create({
+      const newUser = await client.user.create({
         data: {
           ...user,
           password: passwordHash,
           confirm_password: passwordHash,
         },
       });
+
+      return newUser;
     } catch (error) {
       throw new Error("Falha ao criar usuário: " + error.message);
     }
