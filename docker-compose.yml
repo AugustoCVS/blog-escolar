@@ -9,8 +9,6 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/blog_escolar?schema=public
     depends_on:
       - db
-    volumes:
-      - .:/usr/app
     command: sh -c "npx prisma migrate deploy && yarn start"
 
   db:
