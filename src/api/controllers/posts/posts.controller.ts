@@ -4,17 +4,22 @@ import { GetPostsService } from "../../../services/use-cases/posts/get-posts.ser
 import { UpdatePostsService } from "../../../services/use-cases/posts/update-posts.service";
 import { DeletePostsService } from "../../../services/use-cases/posts/delete-posts.service";
 import { GetPostsByIdService } from "../../../services/use-cases/posts/get-posts-by-id.service";
+import { GetPostsBySearchService } from "../../../services/use-cases/posts/get-posts-by-search.service";
+import { GetPostsByAuthorIdService } from "../../../services/use-cases/posts/get-posts-by-author.service";
 
 class PostsController {
   async createPost(request: Request, response: Response) {
-    const { title, content, authorId } = request.body;
+    const { userId } = request.query;
+    const { title, content } = request.body;
+
+    const authorIdString = String(userId);
 
     const createPostUseCase = new CreatePostsService();
 
     await createPostUseCase.execute({
       title,
       content,
-      authorId,
+      authorId: authorIdString,
     });
 
     return response.status(201).send();
@@ -46,48 +51,49 @@ class PostsController {
   }
 
   async getPostsByAuthor(request: Request, response: Response) {
-    const { authorId } = request.params;
-    const { page, limit } = request.query;
+    const { page, limit, userId } = request.query;
 
-    const getPostsUseCase = new GetPostsService();
+    const getPostsByAuthorUseCase = new GetPostsByAuthorIdService();
 
-    const posts = await getPostsUseCase.execute({
+    const authorIdString = String(userId);
+
+    const posts = await getPostsByAuthorUseCase.execute({
       page: Number(page),
       limit: Number(limit),
-      authorId,
+      authorId: authorIdString,
     });
 
     return response.json(posts);
   }
 
   async getPostsBySearch(request: Request, response: Response) {
-    const { title, content } = request.query;
+    const { searchQuery } = request.query;
     const { page, limit } = request.query;
 
-    const getPostsUseCase = new GetPostsService();
+    const getPostsBySearchUseCase = new GetPostsBySearchService();
 
-    const posts = await getPostsUseCase.execute({
+    const posts = await getPostsBySearchUseCase.execute({
       page: Number(page),
       limit: Number(limit),
-      title: String(title),
-      content: String(content),
+      searchQuery: String(searchQuery),
     });
 
     return response.json(posts);
   }
 
   async updatePost(request: Request, response: Response) {
-    const { id } = request.params;
-    const { title, content, authorId } = request.body;
+    const { userId } = request.query;
+    const { title, content } = request.body;
 
     const updatePostUseCase = new UpdatePostsService();
 
+    const userIdString = String(userId);
+
     await updatePostUseCase.execute({
-      id,
+      id: userIdString,
       postData: {
         title,
         content,
-        authorId,
       },
     });
 

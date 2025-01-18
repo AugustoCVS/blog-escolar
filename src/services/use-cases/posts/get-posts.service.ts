@@ -8,9 +8,12 @@ class GetPostsService {
     const skip = (page - 1) * limit;
     const posts = await client.posts.findMany({
       where: { active: true },
+      orderBy: {
+        createdAt: 'desc',
+      },
       skip,
       take: limit,
-      ...authorSelect,
+      ...authorSelect
     });
 
     return posts

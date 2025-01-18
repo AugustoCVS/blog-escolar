@@ -4,36 +4,39 @@ import { authorSelect } from "../../../utils/objects";
 
 class GetPostsBySearchService {
 
-  private async searchPosts({ title, content }: IPostsSearchParams, page: number = 1, limit: number = 10): Promise<IPosts[]> {
+  private async searchPosts(searchQuery: string, page: number = 1, limit: number = 10): Promise<IPosts[]> {
     const skip = (page - 1) * limit;
+
     const posts = await client.posts.findMany({
       where: {
         AND: [
           { active: true },
           {
             OR: [
-              { title: { contains: title, mode: 'insensitive' } },
-              { content: { contains: content, mode: 'insensitive' } },
+              { title: { contains: searchQuery, mode: 'insensitive' } },
+              { content: { contains: searchQuery, mode: 'insensitive' } },
             ],
           },
         ],
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
       skip,
       take: limit,
       ...authorSelect,
     });
 
-    return posts
+    return posts;
   }
 
   async execute({
     page,
     limit,
-    title,
-    content,
-  }: IGetPostsInput & IPostsSearchParams): Promise<IPostResponse | IPosts | IPosts[]> {
+    searchQuery,
+  }: IGetPostsInput & { searchQuery: string }): Promise<IPostResponse | IPosts | IPosts[]> {
     try {
-      return await this.searchPosts({ title, content }, page, limit);
+      return await this.searchPosts(searchQuery, page, limit);
     } catch (error) {
       throw new Error("Falha ao buscar posts: " + error.message);
     }

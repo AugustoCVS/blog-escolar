@@ -11,6 +11,9 @@ class GetPostsByAuthorIdService {
         authorId,
         active: true,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
       skip,
       take: limit,
       ...authorSelect,
