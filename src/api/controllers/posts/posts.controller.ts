@@ -3,6 +3,7 @@ import { CreatePostsService } from "../../../services/use-cases/posts/create-pos
 import { GetPostsService } from "../../../services/use-cases/posts/get-posts.service";
 import { UpdatePostsService } from "../../../services/use-cases/posts/update-posts.service";
 import { DeletePostsService } from "../../../services/use-cases/posts/delete-posts.service";
+import { GetPostsByIdService } from "../../../services/use-cases/posts/get-posts-by-id.service";
 
 class PostsController {
   async createPost(request: Request, response: Response) {
@@ -20,17 +21,56 @@ class PostsController {
   }
 
   async getPosts(request: Request, response: Response) {
-    const { id } = request.params;
-    const { page, limit, title, content } = request.query;
+    const { page, limit } = request.query;
 
     const getPostsUseCase = new GetPostsService();
 
     const posts = await getPostsUseCase.execute({
-      postsId: id,
       page: Number(page),
       limit: Number(limit),
-      title: title as string,
-      content: content as string,
+    });
+
+    return response.json(posts);
+  }
+
+  async getPostById(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const getPostsByIdUseCase = new GetPostsByIdService();
+
+    const post = await getPostsByIdUseCase.execute({
+      postsId: id,
+    });
+
+    return response.json(post);
+  }
+
+  async getPostsByAuthor(request: Request, response: Response) {
+    const { authorId } = request.params;
+    const { page, limit } = request.query;
+
+    const getPostsUseCase = new GetPostsService();
+
+    const posts = await getPostsUseCase.execute({
+      page: Number(page),
+      limit: Number(limit),
+      authorId,
+    });
+
+    return response.json(posts);
+  }
+
+  async getPostsBySearch(request: Request, response: Response) {
+    const { title, content } = request.query;
+    const { page, limit } = request.query;
+
+    const getPostsUseCase = new GetPostsService();
+
+    const posts = await getPostsUseCase.execute({
+      page: Number(page),
+      limit: Number(limit),
+      title: String(title),
+      content: String(content),
     });
 
     return response.json(posts);

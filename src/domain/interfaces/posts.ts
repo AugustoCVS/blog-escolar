@@ -41,4 +41,5 @@ export interface IGetPostsInput {
   postsId?: string;
   page?: number;
   limit?: number;
+  authorId?: string;
 }

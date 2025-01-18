@@ -2,30 +2,30 @@ import { IPosts, IPostResponse, IGetPostsInput, IPostsSearchParams } from "../..
 import { client } from "../../../infra/prisma/client";
 import { authorSelect } from "../../../utils/objects";
 
-class GetPostsService {
+class GetPostsByIdService {
 
-  private async listAllPosts(page: number = 1, limit: number = 10): Promise<IPosts[]> {
-    const skip = (page - 1) * limit;
-    const posts = await client.posts.findMany({
-      where: { active: true },
-      skip,
-      take: limit,
+  private async findPostById(postId: string): Promise<IPosts> {
+    const post = await client.posts.findUnique({
+      where: { id: postId },
       ...authorSelect,
     });
 
-    return posts
+    if (!post || post.active === false) {
+      throw new Error("Post não encontrado");
+    }
+
+    return post
   }
 
   async execute({
-    page,
-    limit,
+    postsId,
   }: IGetPostsInput & IPostsSearchParams): Promise<IPostResponse | IPosts | IPosts[]> {
     try {
-      return await this.listAllPosts(page, limit);
+      return await this.findPostById(postsId);
     } catch (error) {
       throw new Error("Falha ao buscar posts: " + error.message);
     }
   }
 }
 
-export { GetPostsService };
+export { GetPostsByIdService };
