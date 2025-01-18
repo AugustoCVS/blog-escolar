@@ -12,7 +12,6 @@ jobs:
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
     - name: Checkout code
