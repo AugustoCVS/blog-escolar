@@ -82,15 +82,13 @@ class PostsController {
   }
 
   async updatePost(request: Request, response: Response) {
-    const { userId } = request.query;
+    const { postId } = request.params;
     const { title, content } = request.body;
 
     const updatePostUseCase = new UpdatePostsService();
 
-    const userIdString = String(userId);
-
     await updatePostUseCase.execute({
-      id: userIdString,
+      id: postId,
       postData: {
         title,
         content,
@@ -101,12 +99,12 @@ class PostsController {
   }
 
   async deletePost(request: Request, response: Response) {
-    const { id } = request.params;
+    const { postId } = request.params;
 
     const deletePostUseCase = new DeletePostsService();
 
     await deletePostUseCase.execute({
-      postId: id,
+      postId,
     });
 
     return response.status(204).send();
