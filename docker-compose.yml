@@ -6,20 +6,24 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/blog_escolar?schema=public
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - db
     command: sh -c "npx prisma migrate deploy && yarn start"
+    env_file:
+      - .env
 
   db:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: blog_escolar
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - db_data:/var/lib/postgresql/data
+    env_file:
+      - .env
 
 volumes:
   db_data:
