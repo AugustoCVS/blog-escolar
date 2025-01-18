@@ -24,7 +24,17 @@
    O projeto utiliza o PostgreSQL. As configurações do banco de dados estão no arquivo `docker-compose.yml`. Você pode alterar as variáveis de ambiente conforme necessário.
 
 4. **Inicie os serviços**:
-   Para iniciar a aplicação e o banco de dados, execute:
+   Para iniciar tanto a aplicação quanto o banco de dados de forma local, siga os seguintes passos:
+
+  4.1 **Salve os valors necessários dentro de um .env, são eles:**
+
+  POSTGRES_USER=postgres
+  POSTGRES_PASSWORD=postgres
+  POSTGRES_DB=blog_escolar
+  DATABASE_URL="postgresql://postgres:postgres@db:5432/blog_escolar?schema=public"
+
+  4.2 **Execute o comando:**
+
    ```bash
    docker-compose up --build
    ```
