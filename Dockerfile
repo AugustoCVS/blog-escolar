@@ -10,13 +10,13 @@ RUN yarn install
 
 RUN npx prisma generate
 
+COPY . .
+
 ARG DATABASE_URL
 
 ENV DATABASE_URL=$DATABASE_URL
 
 RUN echo "DATABASE_URL=${DATABASE_URL}" > .env
-
-COPY . .
 
 RUN yarn build
 
