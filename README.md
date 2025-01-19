@@ -1,3 +1,6 @@
+To update your README documentation, I'll ensure it reflects the current state of your application based on the provided code snippets. Here's an updated version of your README:
+
+```markdown:README.md
 # Documentação Técnica do Projeto
 
 ## 1. Setup Inicial
@@ -26,12 +29,14 @@
 4. **Inicie os serviços**:
    Para iniciar tanto a aplicação quanto o banco de dados de forma local, siga os seguintes passos:
 
-  4.1 **Salve os valors necessários dentro de um .env, são eles:**
+  4.1 **Salve os valores necessários dentro de um .env, são eles:**
 
+  ```plaintext
   POSTGRES_USER=postgres
   POSTGRES_PASSWORD=postgres
   POSTGRES_DB=blog_escolar
   DATABASE_URL="postgresql://postgres:postgres@db:5432/blog_escolar?schema=public"
+  ```
 
   4.2 **Execute o comando:**
 
@@ -110,36 +115,64 @@ A arquitetura do projeto é baseada em uma estrutura de microserviços, utilizan
 #### 3.2.1. Criar Post
 - **Método**: POST
 - **Endpoint**: `/posts`
+- **QueryParams**: `userId` (ID do usuário)
 - **Corpo da Requisição**:
   ```json
   {
     "title": "Título do Post",
     "content": "Conteúdo do Post",
-    "authorId": "ID do Autor"
   }
   ```
+- **Requer Autenticação**: Sim, o usuário deve ser um administrador.
 
-#### 3.2.2. Obter Posts
+#### 3.2.2. Obter Lista de Posts
 - **Método**: GET
-- **Endpoint**: `/posts`
-- **Parâmetros**: `page`, `limit`, `title`, `content`
+- **Endpoint**: `/posts/list`
+- **QueryParams**:
+  - `page`: Número da página (opcional)
+  - `limit`: Limite de posts por página (opcional)
 
-#### 3.2.3. Atualizar Post
+#### 3.2.3. Obter Post por ID
+- **Método**: GET
+- **Endpoint**: `/posts/list/:id`
+- **Parâmetros**: `id` (ID do post)
+
+#### 3.2.4. Buscar Posts
+- **Método**: GET
+- **Endpoint**: `/posts/search`
+- **QueryParams**:
+  - `searchQuery`: Termo de busca (obrigatório)
+  - `page`: Número da página (opcional)
+  - `limit`: Limite de posts por página (opcional)
+
+#### 3.2.5. Obter Posts por Autor
+- **Método**: GET
+- **Endpoint**: `/posts/author`
+- **QueryParams**:
+  - `userId`: ID do autor (obrigatório)
+  - `page`: Número da página (opcional)
+  - `limit`: Limite de posts por página (opcional)
+- **Requer Autenticação**: Sim, o usuário deve ser um administrador.
+
+#### 3.2.6. Atualizar Post
 - **Método**: PUT
-- **Endpoint**: `/posts/:id`
+- **Endpoint**: `/posts/update/:postId`
+- **QueryParams**: `userId` (ID do usuário)
 - **Corpo da Requisição**:
   ```json
   {
     "title": "Título Atualizado",
-    "content": "Conteúdo Atualizado",
-    "authorId": "ID do Autor"
+    "content": "Conteúdo Atualizado"
   }
   ```
+- **Requer Autenticação**: Sim, o usuário deve ser um administrador.
 
-#### 3.2.4. Deletar Post
+#### 3.2.7. Deletar Post
 - **Método**: DELETE
-- **Endpoint**: `/posts/:id`
-- **Parâmetros**: `id` (ID do post)
+- **Endpoint**: `/posts/:postId`
+- **QueryParams**: `userId` (ID do usuário)
+- **Parâmetros**: `postId` (ID do post)
+- **Requer Autenticação**: Sim, o usuário deve ser um administrador.
 
 ## 4. Uso da Aplicação
 
@@ -153,3 +186,4 @@ Durante o desenvolvimento, a equipe enfrentou alguns desafios, como:
 - **Autenticação e Autorização**: Garantir que apenas usuários autorizados pudessem acessar certas rotas e funcionalidades exigiu um planejamento cuidadoso e a implementação de middlewares.
 
 A equipe aprendeu a importância de uma boa documentação e comunicação durante o desenvolvimento, o que facilitou a resolução de problemas e a implementação de novas funcionalidades.
+```
