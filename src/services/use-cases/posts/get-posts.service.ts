@@ -16,6 +16,10 @@ class GetPostsService {
       ...authorSelect
     });
 
+    if (posts.length === 0) {
+      throw new Error("Nenhum post encontrado");
+    }
+
     return posts
   }
 
