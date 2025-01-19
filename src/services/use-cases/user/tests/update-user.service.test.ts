@@ -4,7 +4,7 @@ import { IUpdateUser } from '../../../../domain/interfaces/user';
 
 describe('UpdateUserService', () => {
   beforeEach(() => {
-    jest.clearAllMocks(); // Limpa os mocks antes de cada teste
+    jest.clearAllMocks();
   });
 
   it('should update a user successfully', async () => {
@@ -16,14 +16,12 @@ describe('UpdateUserService', () => {
       isAdmin: false,
     };
 
-    // Mock da resposta do Prisma Client para o usuário existente
     (client.user.findUnique as jest.Mock).mockResolvedValueOnce({
       id: userId,
       active: true,
       email: 'original@example.com',
     });
 
-    // Mock da validação de e-mail para garantir que o e-mail não existe
     (client.user.findUnique as jest.Mock).mockResolvedValueOnce(null);
 
     await service.execute(userId, userData);
@@ -43,7 +41,6 @@ describe('UpdateUserService', () => {
       isAdmin: false,
     };
 
-    // Simula que o usuário não existe
     (client.user.findUnique as jest.Mock).mockResolvedValue(null);
 
     await expect(service.execute(userId, userData)).rejects.toThrow('Usuário não encontrado');
@@ -58,14 +55,12 @@ describe('UpdateUserService', () => {
       isAdmin: false,
     };
 
-    // Mock da resposta do Prisma Client para o usuário existente
     (client.user.findUnique as jest.Mock).mockResolvedValueOnce({
       id: userId,
       active: true,
       email: 'original@example.com',
     });
 
-    // Simula que o e-mail já está em uso
     (client.user.findUnique as jest.Mock).mockResolvedValueOnce({
       id: '2',
       email: 'existing@example.com',
