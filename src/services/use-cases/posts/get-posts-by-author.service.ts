@@ -19,6 +19,10 @@ class GetPostsByAuthorIdService {
       ...authorSelect,
     });
 
+    if (posts.length === 0) {
+      throw new Error("Nenhum post encontrado para o autor");
+    }
+
     return posts
   }
 
