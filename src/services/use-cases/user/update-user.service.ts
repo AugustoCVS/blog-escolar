@@ -1,4 +1,4 @@
-import { IUpdateUser, IUserResponse } from "../../../domain/interfaces/user";
+import { IUpdateUser } from "../../../domain/interfaces/user";
 import { client } from "../../../infra/prisma/client";
 import { validateEmail, validateIfUserAlreadyExists } from "../../../utils/validations";
 
@@ -10,6 +10,14 @@ class UpdateUserService {
 
   async execute(id: string, userData: IUpdateUser): Promise<void> {
     try {
+      const user = await client.user.findUnique({
+        where: { id },
+      });
+
+      if (!user) {
+        throw new Error("Usuário não encontrado");
+      }
+
       await this.validateUserInput({
         email: userData.email,
       });

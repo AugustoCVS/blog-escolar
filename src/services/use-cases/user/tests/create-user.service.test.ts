@@ -4,7 +4,7 @@ import { ICreateUser } from '../../../../domain/interfaces/user';
 
 describe('CreateUserService', () => {
   beforeEach(() => {
-    jest.clearAllMocks(); // Limpa os mocks antes de cada teste
+    jest.clearAllMocks();
   });
 
   it('should create a user successfully', async () => {
