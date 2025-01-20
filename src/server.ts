@@ -29,3 +29,5 @@ app.use((error: any, request: Request, response: Response, next: NextFunction): 
 })
 
 app.listen(3001, () => console.log("Rodando projeto na porta 3001"));
+
+export { app };

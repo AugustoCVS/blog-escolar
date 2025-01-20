@@ -51,6 +51,19 @@ describe('CreateUserService', () => {
     await expect(service.execute(userData)).rejects.toThrow('Email indisponível');
   });
 
+  it('should throw an error if email is invalid', async () => {
+    const service = new CreateUserService();
+    const userData: ICreateUser = {
+      name: 'Test User',
+      email: 'invalid_email',
+      isAdmin: false,
+      password: 'password',
+      confirm_password: 'password',
+    };
+
+    await expect(service.execute(userData)).rejects.toThrow('Email inválido');
+  })
+
   it('should throw an error if any value is missing', async () => {
     const service = new CreateUserService();
     const userData: ICreateUser = {
