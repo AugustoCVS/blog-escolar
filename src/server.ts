@@ -28,6 +28,6 @@ app.use((error: any, request: Request, response: Response, next: NextFunction): 
   });
 })
 
-const server = app.listen(3001, () => console.log("Rodando projeto na porta 3001"));
+const server = app.listen(3001, () => console.log("Rodando projeto blog_escolar na porta 3001"));
 
 export { app, server };
