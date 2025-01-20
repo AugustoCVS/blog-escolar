@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../server';
+import { app, server } from '../../../server';
 import { client } from '../../../infra/prisma/client';
 
 describe('Posts Controller', () => {
@@ -15,6 +15,11 @@ describe('Posts Controller', () => {
       active: true,
       isAdmin: true,
     });
+  });
+
+  afterAll(async () => {
+    await client.$disconnect();
+    server.close()
   });
 
   it('should create a post successfully', async () => {
