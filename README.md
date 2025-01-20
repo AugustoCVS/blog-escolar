@@ -183,3 +183,7 @@ Durante o desenvolvimento, a equipe enfrentou alguns desafios, como:
 - **Autenticação e Autorização**: Garantir que apenas usuários autorizados pudessem acessar certas rotas e funcionalidades exigiu um planejamento cuidadoso e a implementação de middlewares.
 
 A equipe aprendeu a importância de uma boa documentação e comunicação durante o desenvolvimento, o que facilitou a resolução de problemas e a implementação de novas funcionalidades.
+
+## 6. Url da aplicação em produção: 
+
+https://blog-escolar-latest.onrender.com
