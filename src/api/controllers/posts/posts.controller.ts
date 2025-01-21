@@ -31,8 +31,8 @@ class PostsController {
     const getPostsUseCase = new GetPostsService();
 
     const posts = await getPostsUseCase.execute({
-      page: Number(page),
-      limit: Number(limit),
+      page: Number(page) || 1,
+      limit: Number(limit) || 10,
     });
 
     return response.json(posts);
@@ -58,8 +58,8 @@ class PostsController {
     const authorIdString = String(userId);
 
     const posts = await getPostsByAuthorUseCase.execute({
-      page: Number(page),
-      limit: Number(limit),
+      page: Number(page) || 1,
+      limit: Number(limit) || 10,
       authorId: authorIdString,
     });
 
@@ -73,8 +73,8 @@ class PostsController {
     const getPostsBySearchUseCase = new GetPostsBySearchService();
 
     const posts = await getPostsBySearchUseCase.execute({
-      page: Number(page),
-      limit: Number(limit),
+      page: Number(page) || 1,
+      limit: Number(limit) || 10,
       searchQuery: String(searchQuery),
     });
 
