@@ -10,6 +10,7 @@ describe('CreateUserService', () => {
   it('should create a user successfully', async () => {
     const service = new CreateUserService();
     const userData: ICreateUser = {
+      id: '1',
       name: 'Test User',
       email: 'test@example.com',
       isAdmin: false,
@@ -39,6 +40,7 @@ describe('CreateUserService', () => {
   it('should throw an error if email already exists', async () => {
     const service = new CreateUserService();
     const userData: ICreateUser = {
+      id: '1',
       name: 'Test User',
       email: 'test@example.com',
       isAdmin: false,
@@ -54,6 +56,7 @@ describe('CreateUserService', () => {
   it('should throw an error if email is invalid', async () => {
     const service = new CreateUserService();
     const userData: ICreateUser = {
+      id: '1',
       name: 'Test User',
       email: 'invalid_email',
       isAdmin: false,
@@ -67,6 +70,7 @@ describe('CreateUserService', () => {
   it('should throw an error if any value is missing', async () => {
     const service = new CreateUserService();
     const userData: ICreateUser = {
+      id: '1',
       name: 'Test User',
       email: '',
       isAdmin: false,
@@ -80,6 +84,7 @@ describe('CreateUserService', () => {
   it('should throw an error if password and confirm_password do not match', async () => {
     const service = new CreateUserService();
     const userData: ICreateUser = {
+      id: '1',
       name: 'Test User',
       email: 'teste@example.com',
       isAdmin: false,

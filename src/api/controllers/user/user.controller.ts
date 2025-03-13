@@ -5,11 +5,12 @@ import { UpdateUserService } from "../../../services/use-cases/user/update-user.
 import { DeleteUserService } from "../../../services/use-cases/user/delete-user.service";
 class UserController {
   async createUser(request: Request, response: Response) {
-    const { name, email, isAdmin, password, confirm_password } = request.body;
+    const { id, name, email, isAdmin, password, confirm_password } = request.body;
 
     const createUser = new CreateUserService();
 
     const user = await createUser.execute({
+      id,
       name,
       email,
       isAdmin,

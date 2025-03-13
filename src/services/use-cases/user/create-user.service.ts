@@ -32,6 +32,7 @@ class CreateUserService {
       const passwordHash = await hash(user.password, 8);
       const newUser = await client.user.create({
         data: {
+          id: user.id,
           ...user,
           password: passwordHash,
           confirm_password: passwordHash,
