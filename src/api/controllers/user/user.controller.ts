@@ -3,6 +3,8 @@ import { CreateUserService } from "../../../services/use-cases/user/create-user.
 import { GetUserService } from "../../../services/use-cases/user/get-user.service";
 import { UpdateUserService } from "../../../services/use-cases/user/update-user.service";
 import { DeleteUserService } from "../../../services/use-cases/user/delete-user.service";
+import { LoginUserService } from "../../../services/use-cases/user/login-user.service";
+
 class UserController {
   async createUser(request: Request, response: Response) {
     const { name, email, isAdmin, password, confirm_password } = request.body;
@@ -56,6 +58,19 @@ class UserController {
     });
 
     return response.status(204).send();
+  }
+
+  async loginUser(request: Request, response: Response) {
+    const { email, password } = request.body;
+
+    const loginUserService = new LoginUserService();
+
+    try {
+      const user = await loginUserService.execute({ email, password });
+      return response.json(user);
+    } catch (error) {
+      return response.status(401).json({ error: error.message });
+    }
   }
 }
 
