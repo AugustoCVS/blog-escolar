@@ -17,7 +17,7 @@ class GetPostsService {
     });
 
     if (posts.length === 0) {
-      throw new Error("Nenhum post encontrado");
+      return [];
     }
 
     return posts

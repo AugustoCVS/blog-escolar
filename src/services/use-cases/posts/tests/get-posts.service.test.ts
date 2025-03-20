@@ -46,6 +46,8 @@ describe('GetPostsService', () => {
 
     (client.posts.findMany as jest.Mock).mockResolvedValue([]);
 
-    await expect(service.execute({ page: 1, limit: 10 })).rejects.toThrow('Falha ao buscar posts: Nenhum post encontrado');
+    const result = await service.execute({ page: 1, limit: 10 });
+
+    expect(result).toEqual([]);
   });
 });
