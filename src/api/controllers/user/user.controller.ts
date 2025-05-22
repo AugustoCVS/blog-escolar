@@ -4,6 +4,7 @@ import { GetUserService } from "../../../services/use-cases/user/get-user.servic
 import { UpdateUserService } from "../../../services/use-cases/user/update-user.service";
 import { DeleteUserService } from "../../../services/use-cases/user/delete-user.service";
 import { LoginUserService } from "../../../services/use-cases/user/login-user.service";
+import { GetAllUsersService } from "../../../services/use-cases/user/get-all-users.service";
 
 class UserController {
   async createUser(request: Request, response: Response) {
@@ -71,6 +72,14 @@ class UserController {
     } catch (error) {
       return response.status(401).json({ error: error.message });
     }
+  }
+
+  async getAllUsers(request: Request, response: Response) {
+    const getUserUseCase = new GetAllUsersService();
+
+    const users = await getUserUseCase.execute();
+
+    return response.json(users);
   }
 }
 

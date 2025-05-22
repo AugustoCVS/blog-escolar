@@ -18,9 +18,11 @@ class UpdateUserService {
         throw new Error("Usuário não encontrado");
       }
 
-      await this.validateUserInput({
-        email: userData.email,
-      });
+      if (userData.email && userData.email !== user.email) {
+        await this.validateUserInput({
+          email: userData.email,
+        });
+      }
 
       await client.user.update({
         where: { id },
